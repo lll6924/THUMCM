@@ -98,7 +98,7 @@ def analyze_receive(matches,name):
     plt.savefig(os.path.join("img","receive_"+name+".png"))
     plt.clf()
 
-def analyze_combo2(matches,name):
+def analyze_strike(matches,name):
     serves = []
     for m in matches:
         for s in m._sets:
@@ -107,11 +107,8 @@ def analyze_combo2(matches,name):
                 for i in range(len(p._bats)):
                     if (p._server==name and (i%2)==0)or(p._server==another(name) and (i%2)==1):
                         bat = p._bats[i]
-                        if last is not None:
-                            s1=extract(last)
-                            s2=extract(p._bats[i-1])
-                            s3=extract(bat)
-                            strategy=s1+">"+s2+">"+s3
+                        if last is not None and bat._type!=3 and bat._type!=1:
+                            strategy=extract(bat)
                             found = False
                             for s in serves:
                                 if s["strategy"] == strategy:
@@ -138,7 +135,7 @@ def analyze_combo2(matches,name):
                 label="Win", color="b")
     plt.legend(loc="lower right")
     plt.xlabel("Win/Total")
-    plt.title("the serve of " + name)
+    plt.title("the strike of " + name)
     for i, (index, row) in zip(range(len(serves)), serves.iterrows()):
         # print(row.strategy,row.total,row.win,str(row.win/row.total),index)
         plt.text(row.total, i, str(round(row.win / row.total, 3)), color="black", ha='left')
@@ -151,7 +148,7 @@ def analyze_combo2(matches,name):
     for each in locs:
         yint.append(int(each))
     plt.yticks(yint)
-    plt.savefig(os.path.join("img", "combo2_" + name + ".png"))
+    plt.savefig(os.path.join("img", "strike_" + name + ".png"))
     plt.clf()
 
 def analyze():
@@ -163,8 +160,8 @@ def analyze():
     analyze_serve(matches,'fan')
     analyze_receive(matches,'ma')
     analyze_receive(matches,'fan')
-    analyze_combo2(matches,'ma')
-    analyze_combo2(matches,'fan')
+    analyze_strike(matches,'ma')
+    analyze_strike(matches,'fan')
     lp_predict(matches)
 
 if __name__=="__main__":

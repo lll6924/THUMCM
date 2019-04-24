@@ -1,5 +1,5 @@
 import random
-from match import another
+from match import another,extract
 import math
 
 class predictor:
