@@ -3,6 +3,12 @@ def another(str):
     if(str=="ma"):
         return "fan"
     return "ma"
+
+def extract(bat):
+    if bat._fall is None:
+        return bat._method
+    else:
+        return bat._method + '-' + bat._fall
 class bat:
     def __init__(self,type,method,fall=None,last=None):
         #print(type,method,fall)
@@ -29,6 +35,11 @@ class point:
                 self._server=another(self._winner)
             else:
                 self._server=self._winner
+        if self._server==self._winner and len(self._bats)%2==0:
+            self._bats[-1].type=3
+        if self._server != self._winner and len(self._bats) % 2 == 1:
+            self._bats[-1].type = 3
+
         self._scorema=scorema
         self._scorefan=scorefan
 
